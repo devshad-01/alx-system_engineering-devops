@@ -16,3 +16,5 @@ This directory contains scripts for the "0x03. Shell, Init Files, Variables and 
 - **9-divide_and_rule**: Prints the result of POWER divided by DIVIDE.
 - **10-love_exponent_breath**: Displays the result of BREATH to the power LOVE.
 - **11-binary_to_decimal**: Converts a number from base 2 to base 10.
+- **12-combinations**: Prints all possible combinations of two lowercase letters, except 'oo'.
+- **13-print_float**: Prints a number with two decimal places.
