@@ -20,3 +20,5 @@ This directory contains scripts for the "0x03. Shell, Init Files, Variables and 
 - **13-print_float**: Prints a number with two decimal places.
 - **100-decimal_to_hexadecimal**: Converts a number from base 10 to base 16.
 - **101-rot13**: Encodes and decodes text using the rot13 encryption.
+- **102-odd**: Prints every other line from the input, starting with the first line.
+- **103-water_and_stir**: Adds the two numbers stored in the environment variables WATER and STIR and prints the result in a custom base.
