@@ -10,3 +10,5 @@ This directory contains scripts for the "0x03. Shell, Init Files, Variables and 
 - **3-paths**: Counts the number of directories in the PATH environment variable.
 - **4-global_variables**: Lists all environment variables.
 - **5-local_variables**: Lists all local variables, environment variables, and functions.
+- **6-create_local_variable**: Creates a new local variable named `BEST` with the value `School`.
+- **7-create_global_variable**: Creates a new global variable named `BEST` with the value `School`.
