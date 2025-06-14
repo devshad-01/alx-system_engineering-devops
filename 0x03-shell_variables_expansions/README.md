@@ -14,3 +14,5 @@ This directory contains scripts for the "0x03. Shell, Init Files, Variables and 
 - **7-create_global_variable**: Creates a new global variable named `BEST` with the value `School`.
 - **8-true_knowledge**: Prints the result of the addition of 128 with the value stored in the environment variable TRUEKNOWLEDGE.
 - **9-divide_and_rule**: Prints the result of POWER divided by DIVIDE.
+- **10-love_exponent_breath**: Displays the result of BREATH to the power LOVE.
+- **11-binary_to_decimal**: Converts a number from base 2 to base 10.
