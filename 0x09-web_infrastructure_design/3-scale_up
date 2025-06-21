@@ -1,0 +1,78 @@
+https://ibb.co/MDMRYJTd
+
+# Scale Up Web Infrastructure Design Explanation
+
+## Overview
+This is a scaled-up web infrastructure that splits components across dedicated servers for better performance, scalability, and reliability.
+
+## Components
+- 3 Servers (each running specific components)
+- 1 Load-balancer (HAproxy) configured as a cluster with another load balancer
+- 1 Web server (Nginx)
+- 1 Application server
+- 1 Database (MySQL)
+- 1 Set of Application Files (Code Base)
+
+## Infrastructure Explanation
+
+### Additional Server 1 - Web Server
+A dedicated server running only the Nginx web server:
+- Handles HTTP requests and serves static content
+- No longer shares resources with application or database processes
+- Can be optimized specifically for web serving tasks
+
+### Additional Server 2 - Application Server
+A dedicated server running only the application server:
+- Executes the application logic and business rules
+- Processes dynamic content requests
+- Can be scaled or optimized independently of other components
+
+### Additional Server 3 - Database Server
+A dedicated server running only MySQL database:
+- Stores and manages all persistent data
+- Can be optimized specifically for database operations (memory, disk I/O)
+- More secure as database is isolated from web-facing components
+
+### Clustered Load Balancers (HAproxy)
+Two load balancers configured as a cluster:
+- Provides high availability for the load balancing layer itself
+- If one load balancer fails, the other takes over seamlessly
+- Distributes incoming traffic across multiple servers
+- Supports horizontal scaling by making it easy to add more servers
+
+## Why Additional Elements?
+
+### Separate Servers for Each Component
+1. **Performance Optimization**: Each server can be optimized for its specific role
+   - Web server needs high network throughput
+   - Application server needs more CPU
+   - Database server needs more RAM and fast storage
+
+2. **Improved Security**:
+   - Components are isolated, reducing attack surface
+   - Security policies can be tailored to each server's function
+   - Database is separated from internet-facing components
+
+3. **Independent Scaling**:
+   - Each component can be scaled horizontally by adding more servers of that type
+   - Resources can be allocated where they're needed most
+   - Allows for more precise capacity planning
+
+4. **Better Reliability**:
+   - Failure in one component doesn't necessarily affect others
+   - Maintenance can be performed on individual components with less impact
+
+### Clustered Load Balancers
+1. **High Availability**:
+   - Eliminates the load balancer as a single point of failure
+   - Provides redundancy at the entry point of the infrastructure
+
+2. **Enhanced Reliability**:
+   - Automatic failover between load balancers
+   - Traffic continues to flow even if one load balancer fails
+
+3. **Easier Maintenance**:
+   - Load balancers can be updated or maintained one at a time
+   - Zero-downtime maintenance becomes possible
+
+This infrastructure design follows industry best practices for separation of concerns, allowing for more focused optimization, independent scaling, and improved security while maintaining high availability through load balancer clustering.
