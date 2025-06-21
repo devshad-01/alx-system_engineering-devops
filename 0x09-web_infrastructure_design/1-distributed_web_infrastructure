@@ -1,0 +1,88 @@
+https://ibb.co/v64wVSq4
+
+# Distributed Web Infrastructure Design Explanation
+
+## Overview
+
+This is a three-server web infrastructure that hosts the website www.foobar.com with enhanced reliability and performance.
+
+## Components
+
+- 2 Servers
+- 1 Web Server (Nginx)
+- 1 Application Server
+- 1 Load Balancer (HAproxy)
+- 1 Set of Application Files (Code Base)
+- 1 Database (MySQL Primary-Replica cluster)
+  - 1 Primary (Master) node
+  - 1 Replica (Slave) node
+
+## Why Additional Components?
+
+### Additional Servers
+
+The extra servers provide redundancy, allowing the infrastructure to continue functioning even if one server fails. This addresses the SPOF problem from the simple infrastructure.
+
+### Load Balancer (HAproxy)
+
+The load balancer distributes incoming traffic across multiple servers to ensure no single server becomes overwhelmed. This improves:
+
+- Reliability: If one server fails, traffic is routed to healthy servers
+- Performance: Distributes client requests to optimize resource utilization
+- Scalability: Makes it easier to add more servers when needed
+
+### Load Balancer Configuration
+
+The HAproxy is configured with a Round Robin distribution algorithm:
+
+- Requests are distributed sequentially to each server in turn
+- Simple, fair distribution that works well when servers have similar capabilities
+- Each server receives roughly the same number of requests over time
+
+### Active-Active vs. Active-Passive Setup
+
+This load balancer enables an Active-Active setup:
+
+- **Active-Active**: All servers actively handle requests simultaneously, maximizing resource usage and throughput.
+- **Active-Passive** (Not used here): Some servers remain on standby, only becoming active if primary servers fail. This provides failover capability but doesn't utilize all resources during normal operation.
+
+### Database Primary-Replica Cluster
+
+The MySQL database is configured as a Primary-Replica (Master-Slave) cluster:
+
+1. The Primary node:
+
+   - Handles all write operations (INSERT, UPDATE, DELETE)
+   - Records all data changes in binary logs
+   - Forwards these changes to Replica nodes
+
+2. The Replica node:
+   - Primarily handles read operations
+   - Receives and applies changes from the Primary
+   - Can be promoted to Primary if the original Primary fails
+
+### Application Perspective
+
+From the application's perspective:
+
+- Write operations must go to the Primary node
+- Read operations can be directed to either Primary or Replica nodes (using Replica for reads reduces load on Primary)
+- The application needs to be configured to distinguish between read and write operations and direct them appropriately
+
+## Issues With This Infrastructure
+
+### Single Points of Failure (SPOF)
+
+- The load balancer itself is still a SPOF
+- The Primary database node is a SPOF for write operations
+
+### Security Issues
+
+- No firewall means no traffic filtering to block malicious requests
+- No HTTPS means data transmitted between users and the website is not encrypted, making it vulnerable to eavesdropping and man-in-the-middle attacks
+
+### No Monitoring
+
+- There is no monitoring system to track server health, performance, or detect issues
+- Problems might not be detected until they affect users
+- Difficult to proactively address issues or optimize performance without performance data

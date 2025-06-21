@@ -1,0 +1,91 @@
+https://ibb.co/CsDvkLVD
+
+# Secured and Monitored Web Infrastructure Design Explanation
+
+## Overview
+
+This is a three-server web infrastructure that hosts the website www.foobar.com with enhanced security, encryption, and monitoring.
+
+## Components
+
+- 3 Servers
+- 1 Web Server (Nginx)
+- 1 Application Server
+- 1 Database (MySQL)
+- 3 Firewalls (one on each server)
+- 1 SSL Certificate for HTTPS
+- 3 Monitoring Clients (data collectors)
+- 1 Load Balancer (HAproxy)
+
+## Why Additional Components?
+
+### Firewalls (3)
+
+Firewalls are added to control and filter network traffic to and from each server:
+
+- They act as security barriers between networks
+- They enforce access control policies, blocking unauthorized access
+- They help prevent various network attacks
+- Each server has its own firewall to maintain security even if one server is compromised
+
+### SSL Certificate
+
+SSL is implemented to enable HTTPS:
+
+- Encrypts traffic between clients and the website
+- Establishes secure connections to protect sensitive data
+- Authenticates the identity of the website to users
+- Builds trust with users and improves search engine rankings
+
+### Monitoring Clients
+
+The monitoring system (like Sumologic) is added to:
+
+- Track server health and performance in real-time
+- Detect and alert on anomalies and potential issues
+- Collect data for analysis and optimization
+- Enable proactive problem resolution before users are affected
+
+## How Monitoring Works
+
+Monitoring clients (data collectors) installed on each server:
+
+1. Collect various metrics (CPU, memory, disk usage, application performance, etc.)
+2. Gather logs from system and application processes
+3. Send this data to a central monitoring service
+4. The monitoring service analyzes, visualizes, and alerts based on this data
+
+To monitor web server QPS (Queries Per Second):
+
+1. Configure the monitoring client to collect web server access logs
+2. Set up a metric that counts HTTP requests per time interval
+3. Create dashboards to visualize this data
+4. Set up alerting thresholds for abnormal QPS values
+
+## Issues With This Infrastructure
+
+### SSL Termination at Load Balancer
+
+Terminating SSL at the load balancer creates issues:
+
+- Traffic between load balancer and servers is unencrypted (internal network vulnerability)
+- Reduces end-to-end encryption security
+- Creates a single point of decryption that could be targeted
+
+### Single Write Database
+
+Having only one MySQL server for writes is problematic:
+
+- Creates a single point of failure for write operations
+- Limits write scalability as database load increases
+- Potential data loss if the primary database fails before replication
+
+### Homogeneous Server Components
+
+Having identical components on all servers presents challenges:
+
+- No specialization for specific workloads (database vs. web serving)
+- Inefficient resource utilization (databases need more memory, web servers need more CPU)
+- Security vulnerabilities affect all servers the same way
+- Maintenance becomes more complex
+- Scaling becomes less flexible as you can't scale specific components independently

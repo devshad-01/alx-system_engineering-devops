@@ -1,0 +1,70 @@
+https://ibb.co/Xk6W0g5K
+
+# Simple Web Infrastructure Design Explanation
+
+## Overview
+
+This is a one-server web infrastructure that hosts a website accessible via www.foobar.com.
+
+## Components
+
+- 1 Server (IP: 8.8.8.8)
+- 1 Web Server (Nginx)
+- 1 Application Server
+- 1 Application Files (Code Base)
+- 1 Database (MySQL)
+- 1 Domain Name (foobar.com with www record pointing to server IP 8.8.8.8)
+
+## User Access Flow
+
+1. User inputs www.foobar.com in their browser
+2. DNS resolution translates www.foobar.com to the server IP (8.8.8.8)
+3. Request goes to the web server (Nginx)
+4. Web server forwards the request to the application server
+5. Application server processes the request using the application files (codebase)
+6. Application interacts with the database as needed
+7. Response follows the reverse path back to the user's browser
+
+## Component Explanations
+
+### Server
+
+A server is physical or virtual machine running an operating system that hosts applications and services. It provides computing resources like CPU, memory, disk, and network to run the infrastructure components.
+
+### Domain Name
+
+The domain name (foobar.com) serves as a human-readable alias for the server's IP address. It allows users to access the website using a memorable name instead of numerical IP addresses.
+
+### DNS Record Type
+
+The "www" in www.foobar.com is an A record (Address record) in DNS that maps the subdomain to the server's IPv4 address (8.8.8.8).
+
+### Web Server (Nginx)
+
+The web server handles HTTP requests from clients' browsers. Nginx serves static content directly, manages client connections, and forwards dynamic content requests to the application server.
+
+### Application Server
+
+The application server executes the application logic, processes dynamic requests, and generates content based on user inputs. It runs the actual business logic of the website.
+
+### Database (MySQL)
+
+The database stores and manages the website's data in a structured way. MySQL provides persistent storage for user information, content, and other data needed by the application.
+
+### Communication Protocol
+
+The server uses the HTTP/HTTPS protocols over TCP/IP to communicate with the user's computer. This enables the transfer of web pages, assets, and other data between the server and client browser.
+
+## Infrastructure Issues
+
+### Single Point of Failure (SPOF)
+
+This infrastructure has multiple SPOFs since all components are on a single server. If the server fails, the entire website becomes unavailable.
+
+### Downtime During Maintenance
+
+Any maintenance requiring server restart (like deploying new code or updating the web server) will result in website downtime since there's no redundancy.
+
+### Scalability Limitations
+
+This setup cannot easily handle high traffic volumes as all components share the resources of a single server. There's no way to distribute the load during traffic spikes.
