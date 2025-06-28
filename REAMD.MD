@@ -1,0 +1,1 @@
+ssh -i /home/shad/Projects/alx-system_engineering-devops/school ubuntu@3.88.186.205
