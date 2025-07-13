@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Installs nginx, ensures it listens on port 80, and sets index page to Hello World!
+set -e
+sudo apt-get update
+sudo apt-get install -y nginx
+sudo service nginx start
+# Overwrite default index.html
+sudo sh -c 'echo "Hello World!" > /var/www/html/index.html'
