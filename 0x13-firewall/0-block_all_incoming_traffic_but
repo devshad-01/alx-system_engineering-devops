@@ -1,4 +1,21 @@
 # Commands to block all incoming traffic except ports 22, 80, and 443 on web-01
+
+#!/usr/bin/env bash
+
+# Installs ufw and configures it to allow only ports 22, 80, and 443 for incoming traffic
+
+set -e
+apt-get update
+apt-get install -y ufw
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow 22/tcp
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw --force enable
+
+# Commands to block all incoming traffic except ports 22, 80, and 443 on web-01
+
 sudo apt-get update
 sudo apt-get install -y ufw
 sudo ufw default deny incoming
