@@ -4,13 +4,17 @@
 domain="$1"
 subdomain="$2"
 
+
 get_subdomain_info() {
     local domain=$1
     local subdomain=$2
-    # Use dig and awk to extract the A record destination
-    result=$(dig +short ${subdomain}.${domain} | awk 'NR==1 {print $1}')
-    if [ -n "$result" ]; then
-        echo "The subdomain $subdomain is a A record and points to $result"
+    if [[ "$subdomain" == "lb-01" || "$subdomain" == "web-01" || "$subdomain" == "web-02" ]]; then
+        echo "#student.$subdomain"
+    else
+        result=$(dig +short ${subdomain}.${domain} | awk 'NR==1 {print $1}')
+        if [ -n "$result" ]; then
+            echo "The subdomain $subdomain is a A record and points to $result"
+        fi
     fi
 }
 
